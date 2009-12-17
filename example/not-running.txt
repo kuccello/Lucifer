@@ -1,0 +1,10 @@
+From: integration@openapps.com
+To: TO_REPLACE
+Subject: [KRISPY MON] - PROCESS NOT RUNNING
+Content-Type: text/html; charset="us-ascii"
+
+I thought you would like to know that I had to start the process PROC_REP because it was not running.
+
+MESSAGE:
+MSG_REPLACE
+

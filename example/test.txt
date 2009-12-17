@@ -1,0 +1,10 @@
+From: integration@openapps.com
+To: kuccello@domainer.com
+Subject: [KRISPY MON] - PROCESS NOT RUNNING
+Content-Type: text/html; charset="us-ascii"
+
+I thought you would like to know that I had to start the process  because it was not running.
+
+MESSAGE:
+THE PROCESS: /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R openapps.ru is NOT RUNNING!!!
+

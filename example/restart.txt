@@ -1,0 +1,6 @@
+To: TO_REPLACE
+Subject: [KRISPY MON] - RESTART TRIGGERED
+Content-Type: text/html; charset="us-ascii"
+
+I thought you would like to know that I had to restart the process PROC_REP
+
