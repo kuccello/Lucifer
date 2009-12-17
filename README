@@ -1,0 +1,49 @@
+= Lucifer - GOD replacement monitoring
+
+GOD failed me and my production servers paid the price. I created Lucifer as a truly simple alternative for Linux process monitoring.
+
+== Requirements
+
+- you will need sendmail installed
+- Ruby 1.9.1 is recomended but this should work with Ruby 1.8.x
+
+== Notes
+
+I setup a crontab to call Lucifer every minute but you can easly modify the script to act as its own deamon.
+
+== How it works
+
+The idea is pretty simple. Provide some info about what you want to monitor and what the max thresholds are for cpu, memory
+and an optional http url to check (I wrote this to keep an eye on my web applications).
+
+Cycles - the number of cycles (calls to the monitor method) to use when averaging memory and cpu load (default is 10)
+Max CPU - what percentage of cpu avg is too much - default is 90 *as in 90%
+Max MEM - what percentage of mem avg is too much - default is 90 *as in 90%
+
+Lucifer keeps a log file for each process you monitor (if you have multiple Lucifers being called) the name of the log
+is based on the process name which is sha1 encoded. This log file will have process lines added to it (it will only have
+Cycles number of lines added to it) and is a rolling process log:
+
+EXAMPLE LOG FILE:
+ 0.0  7.4 24149 /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R config.ru
+ 0.0  7.4 24149 /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R config.ru
+ 0.0  7.4 24149 /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R config.ru
+ 0.0  7.4 24149 /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R config.ru
+ 0.0  7.4 24149 /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R config.ru
+ 0.0  7.4 24149 /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R config.ru
+ 0.0  7.4 24149 /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R config.ru
+ 0.0  7.4 24149 /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R config.ru
+ 0.0  7.4 24149 /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R config.ru
+ 0.0  7.4 24149 /usr/local/bin/ruby /usr/local/bin/thin start --no-epoll --threaded --port 8080 -R config.ru
+
+This was taken from a log file that was using a 10 cycle average.
+
+The first column is the cpu and the next is the mem then the pid of the process and finally the process itself.
+We get these values from a call to: ps -eo %cpu,%mem,pid,cmd and filter the results down to what was indicated as the
+monitored process. The first line in the log file is always the newest process check.
+
+We take the average of the cpu and memory etc and if the threshold is met then we send emails (based on the email templates
+indicated) and check the monitor url (if provided) and then restart the process.
+
+Have a look at the email txt files - the format is pretty simple and we use basic string replacement to generate the emails.
+** I hope to make the email templates cooler but not right now.
