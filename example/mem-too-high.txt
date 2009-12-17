@@ -1,5 +1,6 @@
+From: someone@domain.com
 To: TO_REPLACE
-Subject: [KRISPY MON] - MEM MAX TRIGGERED A RESTART  
+Subject: [Lucifer v1.0] - MEM MAX TRIGGERED A RESTART  
 Content-Type: text/html; charset="us-ascii"
 
 I thought you would like to know that I had to restart the process PROC_REP         
